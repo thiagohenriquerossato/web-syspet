@@ -14,13 +14,13 @@ export function CreateTutor(){
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [image, setImage] = useState<File>();
-  const hiddenFileInput = useRef(null)
+  const [image, setImage] = useState<any>();
+  const hiddenFileInput = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
 
 
   function handleInputImage(){
-    hiddenFileInput.current.click();
+    hiddenFileInput.current?.click();
   }
 
   async function handleSubmit(event: FormEvent){
@@ -69,7 +69,7 @@ export function CreateTutor(){
             }
             <input type="file" name="avatar"className={styles.imageInput}
               ref={hiddenFileInput}
-              onChange={event => setImage(event.target.files[0])}
+              onChange={event => setImage(event.target.files && event.target.files[0])}
             />
           </div>
           <label>Nome</label>

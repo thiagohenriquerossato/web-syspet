@@ -21,13 +21,13 @@ export function CreatePet(){
   const [gender, setGender] = useState('MACHO');
   const [birth, setBirth] = useState(today);
   const [diseases, setDiseases] = useState(['']);
-  const [image, setImage] = useState<File>();
-  const hiddenFileInput = useRef(null)
+  const [image, setImage] = useState<any>();
+  const hiddenFileInput = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
 
 
   function handleInputImage(){
-    hiddenFileInput.current.click();
+    hiddenFileInput.current?.click();
   }
 
 
@@ -79,7 +79,7 @@ export function CreatePet(){
             }
             <input type="file" name="avatar"className={styles.imageInput}
               ref={hiddenFileInput}
-              onChange={event => setImage(event.target.files[0])}
+              onChange={event => setImage(event.target.files && event.target.files[0])}
             />
           </div>
           <label>Espécie</label>
@@ -109,7 +109,7 @@ export function CreatePet(){
           <input 
             type="text"
             onChange={event=>setWeight(Number(event.target.value))}
-            value={weight}
+            value={weight?.toString()}
           />
           <label>Data de nascimento</label>
           <input 
