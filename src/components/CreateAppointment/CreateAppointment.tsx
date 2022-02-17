@@ -11,7 +11,7 @@ type CreateAppointmentProps = {
 
 export function CreateAppointment(props:CreateAppointmentProps ){
 
-  const[date, setDate] = useState()
+  const[date, setDate] = useState(new Date().toDateString)
   const[type, setType] = useState()
 
 
