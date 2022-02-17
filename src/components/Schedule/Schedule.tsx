@@ -60,8 +60,8 @@ const events: Event[] = [
 export function Schedule(){
 
 
-  const [newEvent, setNewEvent] = useState<Event>()
-  const [allEvents, setAllEvents] = useState<Event[] >(events)
+  const [newEvent, setNewEvent] = useState<any>()
+  const [allEvents, setAllEvents] = useState<any[] >(events)
 
   function handleAddEvent(){
     setAllEvents([...allEvents, newEvent])
