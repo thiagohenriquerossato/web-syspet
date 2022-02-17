@@ -8,10 +8,9 @@ type CreateAppointmentProps = {
   trigger: boolean
   setTrigger: (trigger: boolean) => void;
 }
-
 export function CreateAppointment(props:CreateAppointmentProps ){
 
-  const[date, setDate] = useState(new Date().toDateString)
+  const[date, setDate] = useState('')
   const[type, setType] = useState()
 
 
