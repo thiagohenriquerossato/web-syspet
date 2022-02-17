@@ -22,15 +22,15 @@ export function EditPet(){
   const [birth, setBirth] = useState(today);
   const [diseases, setDiseases] = useState(['']);
 
-  const [image, setImage] = useState<File>();
-  const hiddenFileInput = useRef(null);
+  const [image, setImage] = useState<any>();
+  const hiddenFileInput = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const {pet_id}= useParams();
   const [animal, setAnimal] = useState<Animal>();;
 
 
   function handleInputImage(){
-    hiddenFileInput.current.click();
+    hiddenFileInput.current?.click();
   }
   async function getAnimal () {
     const { data } = await api.get<Animal>(`/animal/id/${pet_id}`);
@@ -99,7 +99,7 @@ export function EditPet(){
             }
             <input type="file" name="avatar"className={styles.imageInput}
               ref={hiddenFileInput}
-              onChange={event => setImage(event.target.files[0])}
+              onChange={event => setImage(event.target.files&& event.target.files[0])}
             />
           </div>
           <label>Espécie</label>

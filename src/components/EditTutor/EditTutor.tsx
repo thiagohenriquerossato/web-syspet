@@ -15,15 +15,15 @@ export function EditTutor(){
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [image, setImage] = useState<File>();
-  const hiddenFileInput = useRef(null)
+  const [image, setImage] = useState<any>();
+  const hiddenFileInput = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   const {tutor_id}= useParams()
   const [tutor, setTutor] = useState<Tutor>()
 
 
   function handleInputImage(){
-    hiddenFileInput.current.click();
+    hiddenFileInput.current?.click();
   }
   async function getTutor () {
     const { data } = await api.get<Tutor>(`/tutor/id/${tutor_id}`);
@@ -87,7 +87,7 @@ export function EditTutor(){
             }
             <input type="file" name="avatar"className={styles.imageInput}
               ref={hiddenFileInput}
-              onChange={event => setImage(event.target.files[0])}
+              onChange={event => setImage(event.target.files && event.target.files[0])}
             />
           </div>
           <label>Nome</label>
