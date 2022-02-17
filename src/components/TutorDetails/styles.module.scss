@@ -1,0 +1,54 @@
+.detailsWrapper{
+  display: flex;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.detailsContainer {
+  display: flex;
+  width: 35%;
+  height: 30rem;
+  flex-direction: column;
+  padding: 2rem;
+  margin-right: 2rem;
+  border: 1px solid #1a1b22;
+  border-radius: 0.5rem;
+
+  img {
+    width: 128px;
+    height: 128px;
+    padding-bottom: 1rem;
+    object-fit: cover;
+  }
+  h4 {
+    padding-bottom: 0.2rem;
+  }
+  span {
+    padding-bottom: 0.4rem;
+  }
+}
+.petsList {
+  padding: 2rem;
+  width: 65%;
+  height: 30rem;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 16rem));
+  gap: 1rem;
+
+}
+
+@media screen and (max-width:1024px){
+  .detailsWrapper {
+    flex-direction: column;
+  }
+
+  .detailsContainer {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .petsList {
+    width: 100%;
+  }
+}

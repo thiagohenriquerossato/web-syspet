@@ -1,0 +1,60 @@
+.card {
+  box-shadow: 0 0 10px 5px #e1e5ee;
+  border-radius: 0.2rem;
+  min-width: 20rem;
+  display: flex;
+
+
+  img{
+    width:14rem;
+    height: 11rem;
+    object-fit: cover;
+  }
+
+  .cardBody {
+    margin: 1rem;
+    flex-grow: 1;
+  }
+  cursor: pointer;
+
+  transition: transform 200ms ease-in;
+
+  &:hover{
+    transform: scale(1.02);
+  }
+}
+
+.cardName {
+  line-height: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+.cardPhoneSpecies, .cardEmailBreed, .cardAddressGender{
+  line-height: 1.2rem;
+  overflow: hidden;
+}
+
+.cardLinks {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 0.3rem;
+
+  a{
+    padding-left: 0.5rem;
+  }
+}
+
+@media screen and(min-width:600px) {
+  .card{
+    flex-direction: column;
+    text-align: center;
+    min-width: 14rem;
+
+    img {
+      width: 100%;
+      height: 12rem;
+    }
+  }
+  
+}
