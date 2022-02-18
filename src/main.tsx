@@ -5,6 +5,8 @@ import App from './App'
 import { AuthProvider } from './contexts/auth'
 import { BrowserRouter } from 'react-router-dom'
 
+console.log(`App rodando em: ${import.meta.env.MODE}`)
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

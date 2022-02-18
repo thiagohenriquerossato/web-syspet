@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { PetsContext } from "../../contexts/pets";
+import { baseURL } from "../../services/baseURL";
 import { Card } from "../Cards/Card";
 import { Loading } from "../Loading/Loading";
 import styles from "./styles.module.scss"
@@ -25,7 +26,7 @@ export function Pets(){
       const animals = pets.map(pet=>{
         return {
           id: pet.id,
-          img: pet.avatar? `https://syspet-backend-alfa.herokuapp.com/animal/${pet.avatar}` : '',
+          img: pet.avatar? `${baseURL}/animal/${pet.avatar}` : '',
           name: pet.name,
           breed: pet.breed,
           species: pet.species,

@@ -7,6 +7,7 @@ import { Tutor } from '../../types/tutor';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Animal } from '../../types/animal';
 import dayjs from 'dayjs';
+import { baseURL } from '../../services/baseURL';
 
 
 
@@ -91,7 +92,7 @@ export function EditPet(){
                 width={64} 
                 onClick={handleInputImage}
               /> : 
-              <img src={animal?.avatar? `https://syspet-backend-alfa.herokuapp.com/animal/${animal.avatar}` : photo} 
+              <img src={animal?.avatar? `${baseURL}/animal/${animal.avatar}` : photo} 
                 alt="blank photo" 
                 width={64} 
                 onClick={handleInputImage}

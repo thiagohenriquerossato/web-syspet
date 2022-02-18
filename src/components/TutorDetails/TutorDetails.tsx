@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { TutoresContext } from "../../contexts/tutores"
+import { baseURL } from "../../services/baseURL"
 import { Card } from "../Cards/Card"
 import styles from "./styles.module.scss"
 
@@ -15,7 +16,7 @@ export function TutorDetails(){
   return (
     <div className={styles.detailsWrapper}>
       <div className={styles.detailsContainer}>
-        <img className={styles.photo} src={tutor?.avatar? `https://syspet-backend-alfa.herokuapp.com/tutores/${tutor.avatar}` : "/assets/blankPhoto.png"} alt={tutor?.name}/>
+        <img className={styles.photo} src={tutor?.avatar? `${baseURL}/tutores/${tutor.avatar}` : "/assets/blankPhoto.png"} alt={tutor?.name}/>
         <h4>Nome:</h4>
         <span>{tutor?.name}</span>
         <h4>Email:</h4>
@@ -33,7 +34,7 @@ export function TutorDetails(){
                 key={index}
                 tutor_id={pet.tutor_id}
                 pet_id={pet.id}
-                img={pet.avatar? `https://syspet-backend-alfa.herokuapp.com/animal/${pet.avatar}`: ""}
+                img={pet.avatar? `${baseURL}/animal/${pet.avatar}`: ""}
                 name={pet.name}
                 species={pet.species}
                 breed={pet.breed}

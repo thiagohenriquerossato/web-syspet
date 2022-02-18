@@ -3,6 +3,7 @@ import { Card } from "../Cards/Card";
 import { useContext, useEffect, useState } from "react";
 import { TutoresContext } from "../../contexts/tutores";
 import { Loading } from "../Loading/Loading";
+import { baseURL } from "../../services/baseURL";
 
 type TutoresList = {
   id: string;
@@ -29,7 +30,7 @@ export function Tutores(){
       const tutors = tutores.map(tutor =>{
         return{
           id: tutor.id,
-          img: tutor.avatar ? `https://syspet-backend-alfa.herokuapp.com/tutores/${tutor.avatar}`: '',
+          img: tutor.avatar ? `${baseURL}/tutores/${tutor.avatar}`: '',
           name: tutor.name,
           phone: tutor.phone,
           email: tutor.email,

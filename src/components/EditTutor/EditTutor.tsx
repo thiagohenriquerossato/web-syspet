@@ -5,6 +5,7 @@ import { TutoresContext } from '../../contexts/tutores';
 import { api } from '../../services/api';
 import { Tutor } from '../../types/tutor';
 import { useNavigate, useParams } from 'react-router-dom';
+import { baseURL } from '../../services/baseURL';
 
 
 
@@ -79,7 +80,7 @@ export function EditTutor(){
                 width={128} 
                 onClick={handleInputImage}
               /> : 
-              <img src={tutor?.avatar? `https://syspet-backend-alfa.herokuapp.com/tutores/${tutor.avatar}` : photo} 
+              <img src={tutor?.avatar? `${baseURL}/tutores/${tutor.avatar}` : photo} 
                 alt="blank photo" 
                 width={128} 
                 onClick={handleInputImage}

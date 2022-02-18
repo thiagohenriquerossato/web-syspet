@@ -1,0 +1,1 @@
+export const baseURL = import.meta.env.PROD ? "https://syspet-backend-alfa.herokuapp.com" : "http://localhost:3333"
