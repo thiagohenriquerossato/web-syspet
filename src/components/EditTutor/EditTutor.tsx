@@ -80,7 +80,7 @@ export function EditTutor(){
                 width={128} 
                 onClick={handleInputImage}
               /> : 
-              <img src={tutor?.avatar? `${baseURL}/tutores/${tutor.avatar}` : photo} 
+              <img src={tutor?.avatar? tutor.avatar : photo} 
                 alt="blank photo" 
                 width={128} 
                 onClick={handleInputImage}

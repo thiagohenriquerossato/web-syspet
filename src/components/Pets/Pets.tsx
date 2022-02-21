@@ -26,7 +26,7 @@ export function Pets(){
       const animals = pets.map(pet=>{
         return {
           id: pet.id,
-          img: pet.avatar? `${baseURL}/animal/${pet.avatar}` : '',
+          img: pet.avatar? pet.avatar : '',
           name: pet.name,
           breed: pet.breed,
           species: pet.species,

@@ -92,7 +92,7 @@ export function EditPet(){
                 width={64} 
                 onClick={handleInputImage}
               /> : 
-              <img src={animal?.avatar? `${baseURL}/animal/${animal.avatar}` : photo} 
+              <img src={animal?.avatar? animal.avatar : photo} 
                 alt="blank photo" 
                 width={64} 
                 onClick={handleInputImage}

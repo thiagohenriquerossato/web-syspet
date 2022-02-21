@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { useContext, useEffect, useState } from 'react'
+import photo from "../../../assets/blankPhoto.png"
 import { useParams } from 'react-router-dom'
 import { PetsContext } from '../../contexts/pets'
 import { baseURL } from '../../services/baseURL'
@@ -57,7 +58,7 @@ export function PetDetails(){
   return (
     <div className={styles.detailsWrapper}>
       <div className={styles.detailsContainer}>
-        <img className={styles.photo} src={pet?.avatar? `${baseURL}/animal/${pet.avatar}` : "/assets/blankPhoto.png"} alt={pet?.name}/>
+        <img className={styles.photo} src={pet?.avatar? pet.avatar : photo} alt={pet?.name}/>
         <h4>Espécie:</h4>
         <span>{pet?.species}</span>
         <h4>Raça:</h4>

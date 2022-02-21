@@ -1,4 +1,5 @@
 import styles from "./styles.module.scss"
+import photo from '../../../assets/blankPhoto.png'
 import { Card } from "../Cards/Card";
 import { useContext, useEffect, useState } from "react";
 import { TutoresContext } from "../../contexts/tutores";
@@ -30,7 +31,7 @@ export function Tutores(){
       const tutors = tutores.map(tutor =>{
         return{
           id: tutor.id,
-          img: tutor.avatar ? `${baseURL}/tutores/${tutor.avatar}`: '',
+          img: tutor.avatar ? tutor.avatar: photo,
           name: tutor.name,
           phone: tutor.phone,
           email: tutor.email,
@@ -40,13 +41,15 @@ export function Tutores(){
       })
       setTutorsList(tutors)
       
+    }else{
+      setTutorsList([])
     }
   },[tutores])
   
   return (
     <div className={styles.wrapper}>
       {
-        isLoading ? <Loading/> : 
+        isLoading ? <Loading/> : tutorsList.length > 1 ?
         (
           tutorsList.map((tutor, index) =>{
             return(
@@ -62,7 +65,7 @@ export function Tutores(){
               />
             )
           })
-        )
+        ): <p className={styles.noResult}>Não há correspondência com o termo buscado</p>
       }
     </div>
   )
