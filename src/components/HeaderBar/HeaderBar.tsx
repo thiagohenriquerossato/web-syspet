@@ -19,10 +19,8 @@ export function HeaderBar () {
   const [createAppointment, setCreateAppointment] = useState(false)
   const [activePopUp, setActivePopUp] = useState(false)
 
-  const [searchActive, setSearchActive] = useState(false)
   const [editActive, setEditActive] = useState(false)
 
-  const[searchTerm, setSearchTerm] = useState('')
 
 
   function handleLogOut(){
@@ -33,17 +31,6 @@ export function HeaderBar () {
     setActivePopUp(true);
   }
 
-  async function handleSearch(event: FormEvent){
-    event.preventDefault();
-    if(!searchTerm.trim()){
-      return;
-    }
-    if(page==="tutor") getTutoresByName(searchTerm)
-    if(page==="pet") alert("função nao ativa")
-    setIsLoading(true);
-    setSearchTerm('')
-  }
-
 
   useEffect(()=>{
     const [,,,pagina] = window.location.href.split("/");
@@ -51,7 +38,6 @@ export function HeaderBar () {
       case "tutores":
         setCreateTutorActive(true);
         setCreatePetActive(false);
-        setSearchActive(true);
         setEditActive(false);
         setCreateAppointment(false);
         setPage("tutor");
@@ -59,7 +45,6 @@ export function HeaderBar () {
       case "tutor":
         setCreatePetActive(true);
         setCreateTutorActive(false);
-        setSearchActive(false);
         setEditActive(true);
         setCreateAppointment(false);
         setPage("tutor");
@@ -68,7 +53,6 @@ export function HeaderBar () {
       case "pets":
         setCreatePetActive(false);
         setCreateTutorActive(false);
-        setSearchActive(true);
         setCreateAppointment(false);
         setEditActive(false);
         setPage("pet");
@@ -76,7 +60,6 @@ export function HeaderBar () {
         case "pet":
         setCreatePetActive(false);
         setCreateTutorActive(false);
-        setSearchActive(false);
         setCreateAppointment(true);
         setEditActive(true);
         setPage("pet");
@@ -84,7 +67,6 @@ export function HeaderBar () {
       default:
         setCreateTutorActive(false);
         setCreatePetActive(false);
-        setSearchActive(false);
         setEditActive(false);
         setCreateAppointment(false);
 
@@ -109,25 +91,12 @@ export function HeaderBar () {
 
       {/* ACTIONS */}
       <div className={styles.actions}>
-        {/* <div className={searchActive ? styles.searchInput : styles.notActive}>
-          <form onSubmit={handleSearch}>
-            <input type="text" 
-              placeholder={`Procurar ${page}`}
-              onChange={event=>{setSearchTerm(event.target.value)}}
-              value={searchTerm}
-            />
-            <button>
-              <MdSearch/>
-            </button>
-              
-          </form>
-        </div> */}
         <div>
-          <div onClick={handleCreateAppointment} className={createAppointment ? styles.createEntry : styles.notActive}>
-            <span>Criar agendamento</span>
-          </div>
+          
+          <span onClick={handleCreateAppointment} className={createAppointment ? styles.createEntry : styles.notActive}>Criar agendamento</span>
+          
           <CreateAppointment petId={pet?.id} trigger={activePopUp} setTrigger={setActivePopUp}/>
-          <NavLink to={editActive && !searchActive?`/criar/pet/${tutor?.id}`:`/criar/${page}`} className={createTutorActive || createPetActive? styles.createEntry : styles.notActive}>
+          <NavLink to={editActive ?`/criar/pet/${tutor?.id}`:`/criar/${page}`} className={createTutorActive || createPetActive? styles.createEntry : styles.notActive}>
             <span>{!createPetActive?`Cadastrar ${page}`: 'Cadastrar Pet'}</span>
           </NavLink>
           <NavLink to={editActive && page==='tutor'?`/editar/${page}/${tutor?.id}`:`/editar/pet/${pet?.id}`} className={editActive? styles.createEntry : styles.notActive}>

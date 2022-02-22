@@ -200,7 +200,14 @@ nav {
   color: var(--color_nav_ctg);
   transition: all ease-in-out 0.2s;
 
-  
+  input {
+    width: 100%;
+    outline: none;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid #363740;
+    text-align: center;
+  }
 
 
   button {
