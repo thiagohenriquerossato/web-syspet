@@ -188,6 +188,38 @@ nav {
   }
 }
 
+.notActive {
+  display: none;
+}
+.searchForm {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+  color: var(--color_nav_ctg);
+  transition: all ease-in-out 0.2s;
+
+  
+
+
+  button {
+    background: none;
+    border: none;
+    padding-right: 0.8rem;
+
+    svg {
+      font-size: 1.5rem;
+      color: var(--color_nav_not_active);
+      flex-shrink: 0;
+    }
+  
+    &:hover svg {
+      color: var(--color_nav_active);
+    }
+  }
+}
+
 .navSmall {
   width: 3rem;
   .categories {
@@ -203,5 +235,9 @@ nav {
     svg{
       transform: scaleX(-1);
     }
+  }
+
+  .searchInput {
+    display: none;
   }
 }

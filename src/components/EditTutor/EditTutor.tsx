@@ -6,6 +6,7 @@ import { api } from '../../services/api';
 import { Tutor } from '../../types/tutor';
 import { useNavigate, useParams } from 'react-router-dom';
 import { baseURL } from '../../services/baseURL';
+import { Loading } from '../Loading/Loading';
 
 
 
@@ -21,6 +22,7 @@ export function EditTutor(){
   const navigate = useNavigate()
   const {tutor_id}= useParams()
   const [tutor, setTutor] = useState<Tutor>()
+  const [isSaving, setIsSaving] = useState(false);
 
 
   function handleInputImage(){
@@ -46,7 +48,7 @@ export function EditTutor(){
   async function handleSubmit(event: FormEvent){
     
     event.preventDefault();
-
+    setIsSaving(true);
     const {data} = await api.put<Tutor>(`/tutor/${tutor_id}`,{name, email, phone, address});
 
     if(image){
@@ -63,7 +65,8 @@ export function EditTutor(){
       })
       
     }
-    alert("Dados alterados com sucesso!")
+    setIsSaving(false);
+    // alert("Dados alterados com sucesso!")
     navigate(`/tutor/${data.id}`)
 
   }
@@ -71,7 +74,9 @@ export function EditTutor(){
   return(
 
     <div className={styles.createTutorWrapper}>
-      <div className={styles.createTutorBox}>
+      { isSaving ? <Loading/> :
+        
+        <div className={styles.createTutorBox}>
         <form onSubmit={handleSubmit} className={styles.createTutorForm}>
           <div className={styles.avatar}>
             {image ? 
@@ -117,7 +122,7 @@ export function EditTutor(){
           />
           <button type="submit">Salvar</button>
         </form>
-      </div>
+      </div>}
     </div >
   )
 }

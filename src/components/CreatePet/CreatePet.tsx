@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../services/api";
 import { Animal } from "../../types/animal";
 import styles from "./styles.module.scss"
+import { Loading } from "../Loading/Loading";
 
 export function CreatePet(){
 
@@ -24,6 +25,8 @@ export function CreatePet(){
   const [image, setImage] = useState<any>();
   const hiddenFileInput = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
+  const [isSaving, setIsSaving] = useState(false);
+
 
 
   function handleInputImage(){
@@ -35,7 +38,7 @@ export function CreatePet(){
   async function handleSubmit(event: FormEvent){
     
     event.preventDefault();
-
+    setIsSaving(true);
     const {data} = await api.post<Animal>(`/animal/${tutor_id}`,{
       name, species, weight, breed, gender, birth, pre_existing_diseases: diseases
     })
@@ -53,7 +56,8 @@ export function CreatePet(){
       })
       
     }
-    alert("Dados salvos com sucesso!")
+    setIsSaving(false);
+    // alert("Dados salvos com sucesso!")
     
     navigate(`/pet/${data.id}`)
 
@@ -62,7 +66,9 @@ export function CreatePet(){
   return(
 
     <div className={styles.createTutorWrapper}>
-      <div className={styles.createTutorBox}>
+    {
+      isSaving ? <Loading/> :
+     <div className={styles.createTutorBox}>
         <form onSubmit={handleSubmit} className={styles.createTutorForm}>
           <div className={styles.avatar}>
             {image ? 
@@ -119,7 +125,7 @@ export function CreatePet(){
           />
           <button type="submit">Salvar</button>
         </form>
-      </div>
+      </div>}
     </div >
   )
 }

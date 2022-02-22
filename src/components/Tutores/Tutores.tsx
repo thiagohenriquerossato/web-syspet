@@ -49,7 +49,7 @@ export function Tutores(){
   return (
     <div className={styles.wrapper}>
       {
-        isLoading ? <Loading/> : tutorsList.length > 1 ?
+        isLoading ? <Loading/> : tutorsList.length >= 1 ?
         (
           tutorsList.map((tutor, index) =>{
             return(

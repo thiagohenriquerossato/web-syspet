@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Animal } from '../../types/animal';
 import dayjs from 'dayjs';
 import { baseURL } from '../../services/baseURL';
+import { Loading } from '../Loading/Loading';
 
 
 
@@ -27,7 +28,9 @@ export function EditPet(){
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const {pet_id}= useParams();
-  const [animal, setAnimal] = useState<Animal>();;
+  const [animal, setAnimal] = useState<Animal>();
+  const [isSaving, setIsSaving] = useState(false);
+
 
 
   function handleInputImage(){
@@ -56,6 +59,7 @@ export function EditPet(){
   async function handleSubmit(event: FormEvent){
     
     event.preventDefault();
+    setIsSaving(true);
 
     const {data} = await api.put<Animal>
       (`/animal/${pet_id}`,
@@ -75,7 +79,8 @@ export function EditPet(){
       })
       
     }
-    alert("Dados alterados com sucesso!")
+    setIsSaving(false)
+    // alert("Dados alterados com sucesso!")
     navigate(`/pet/${data.id}`)
 
   }
@@ -83,7 +88,9 @@ export function EditPet(){
   return(
 
     <div className={styles.createTutorWrapper}>
-      <div className={styles.createTutorBox}>
+      {
+        isSaving ? <Loading/> : 
+        <div className={styles.createTutorBox}>
         <form onSubmit={handleSubmit} className={styles.createTutorForm}>
           <div className={styles.avatar}>
             {image ? 
@@ -140,7 +147,7 @@ export function EditPet(){
           />
           <button type="submit">Salvar</button>
         </form>
-      </div>
+      </div>}
     </div >
   )
 }

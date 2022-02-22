@@ -109,7 +109,7 @@ export function HeaderBar () {
 
       {/* ACTIONS */}
       <div className={styles.actions}>
-        <div className={searchActive ? styles.searchInput : styles.notActive}>
+        {/* <div className={searchActive ? styles.searchInput : styles.notActive}>
           <form onSubmit={handleSearch}>
             <input type="text" 
               placeholder={`Procurar ${page}`}
@@ -121,7 +121,7 @@ export function HeaderBar () {
             </button>
               
           </form>
-        </div>
+        </div> */}
         <div>
           <div onClick={handleCreateAppointment} className={createAppointment ? styles.createEntry : styles.notActive}>
             <span>Criar agendamento</span>
