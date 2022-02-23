@@ -13,12 +13,14 @@ import { Appointment } from '../../types/Appointments';
 import dayjs from 'dayjs';
 import { PopUp } from '../PopUp/PopUp';
 import { Animal } from '../../types/animal';
+import { AppointmentDetails } from '../AppointmentDetails/AppointmentDetails';
 
 moment.locale('pt-br')
 const localizer = momentLocalizer(moment);
 
 
 type Event = {
+  appointment_id: string,
   title:string,
   allDay?: boolean,
   start: Date,
@@ -49,29 +51,27 @@ const messages = {
 export function Schedule(){
 
 
-  const [newEvent, setNewEvent] = useState<any>()
+  const [reloadPage, setReloadPage] = useState(false)
   const [allEvents, setAllEvents] = useState<any[] >([])
   const [trigger, setTrigger] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState<Event>()
-  
-
-  function handleAddEvent(){
-    setAllEvents([...allEvents, newEvent])
-  }
 
   async function getAppointments (){
     const {data} = await api.get<Appointment[]>("/appointment");
 
     const events = data.map(appointment =>{
-      const event: Event = {
-        title: `${appointment.type} com ${appointment.animal.name}`,
-        start: new Date(appointment.date),
-        end: new Date(dayjs(appointment.date).add(1,'h').toDate()),
-        desc: `${appointment.type} ${appointment.animal.name}`,
-        type: appointment.type,
-        pet: appointment.animal,
+      if(!appointment.is_canceld){
+        const event: Event = {
+          appointment_id: appointment.id,
+          title: `${appointment.type} com ${appointment.animal.name}`,
+          start: new Date(appointment.date),
+          end: new Date(dayjs(appointment.date).add(1,'h').toDate()),
+          desc: `${appointment.type} ${appointment.animal.name}`,
+          type: appointment.type,
+          pet: appointment.animal,
+        }
+        return event;
       }
-      return event;
     });
     setAllEvents(events);
   }
@@ -79,16 +79,14 @@ export function Schedule(){
   useEffect(()=>{
     getAppointments();
 
-  },[])
+  },[reloadPage])
 
   function handleSelectEvent(event: Event){
     setTrigger(true)
     setSelectedEvent(event)
     
   }
-  function handleStyleProps(event:Event){
-    
-  }
+  
 
 
   return (
@@ -101,7 +99,6 @@ export function Schedule(){
         endAccessor="end"
         style={{height:"75%", margin: "50px", color:"#363740"}}
         onDoubleClickEvent={event=>{handleSelectEvent(event)}}
-        
         eventPropGetter={(event: Event) => {
           let bgColor;
           if(event.type==="Vacina") bgColor = "#4d9120"
@@ -128,9 +125,7 @@ export function Schedule(){
           };
       }}
       />
-      <PopUp setTrigger={setTrigger} trigger={trigger} >
-        <span>{selectedEvent?.title}</span>
-      </PopUp>
+      <AppointmentDetails setReloadPage={setReloadPage} event={selectedEvent} setTrigger={setTrigger}  trigger={trigger}/>
     </>
   )
 }
