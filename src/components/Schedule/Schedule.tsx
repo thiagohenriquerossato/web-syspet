@@ -7,7 +7,12 @@ import startOfWeek from 'date-fns/startOfWeek'
 import getDay from 'date-fns/getDay'
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import DatePicker from "react-datepicker"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { api } from '../../services/api';
+import { Appointment } from '../../types/Appointments';
+import dayjs from 'dayjs';
+import { PopUp } from '../PopUp/PopUp';
+import { Animal } from '../../types/animal';
 
 moment.locale('pt-br')
 const localizer = momentLocalizer(moment);
@@ -17,7 +22,10 @@ type Event = {
   title:string,
   allDay?: boolean,
   start: Date,
-  end: Date
+  end: Date,
+  desc?: string,
+  type: string,
+  pet: Animal,
 }
 
 const messages = {
@@ -35,25 +43,6 @@ const messages = {
   showMore: (total:number) => `+ (${total}) Eventos`,
 }
 
-const events: Event[] = [
-  {
-    title: "Vacina Lola",
-    start: new Date("2022-02-18T10:00"),
-    end: new Date("2022-02-18T11:00")
-  },
-  {
-    title: "Big event",
-    allDay: true,
-    start: new Date("02/03/2022"),
-    end: new Date("02/03/2022")
-  },
-  {
-    title: "Big event",
-    allDay: true,
-    start: new Date("02/04/2022"),
-    end: new Date("02/04/2022")
-  }
-]
 
 
 
@@ -61,10 +50,44 @@ export function Schedule(){
 
 
   const [newEvent, setNewEvent] = useState<any>()
-  const [allEvents, setAllEvents] = useState<any[] >(events)
+  const [allEvents, setAllEvents] = useState<any[] >([])
+  const [trigger, setTrigger] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState<Event>()
+  
 
   function handleAddEvent(){
     setAllEvents([...allEvents, newEvent])
+  }
+
+  async function getAppointments (){
+    const {data} = await api.get<Appointment[]>("/appointment");
+
+    const events = data.map(appointment =>{
+      const event: Event = {
+        title: `${appointment.type} com ${appointment.animal.name}`,
+        start: new Date(appointment.date),
+        end: new Date(dayjs(appointment.date).add(1,'h').toDate()),
+        desc: `${appointment.type} ${appointment.animal.name}`,
+        type: appointment.type,
+        pet: appointment.animal,
+      }
+      return event;
+    });
+    setAllEvents(events);
+  }
+
+  useEffect(()=>{
+    getAppointments();
+
+  },[])
+
+  function handleSelectEvent(event: Event){
+    setTrigger(true)
+    setSelectedEvent(event)
+    
+  }
+  function handleStyleProps(event:Event){
+    
   }
 
 
@@ -77,16 +100,37 @@ export function Schedule(){
         startAccessor="start" 
         endAccessor="end"
         style={{height:"75%", margin: "50px", color:"#363740"}}
-        eventPropGetter={(event) => {
+        onDoubleClickEvent={event=>{handleSelectEvent(event)}}
+        
+        eventPropGetter={(event: Event) => {
+          let bgColor;
+          if(event.type==="Vacina") bgColor = "#4d9120"
+          if(event.type==="Veterinária") bgColor = "#203e91"
+          if(event.type==="Nutricional") bgColor = "#f59330"
+
+          let newStyle
+          if(dayjs(event.end).isBefore(dayjs(new Date()))){
+            newStyle= {
+              backgroundColor: bgColor,
+              opacity: 0.5,
+              borderRadius: '8px',
+              minHeight: '10px',
+            }
+          }else {
+            newStyle= {
+              backgroundColor: bgColor,
+              borderRadius: '8px',
+              minHeight: '10px',
+            }
+          }
           return {
-              style: {
-                  backgroundColor: '#f59230',
-                  borderRadius: '8px',
-                  minHeight: '10px',
-              },
+              style: newStyle,
           };
       }}
       />
+      <PopUp setTrigger={setTrigger} trigger={trigger} >
+        <span>{selectedEvent?.title}</span>
+      </PopUp>
     </>
   )
 }

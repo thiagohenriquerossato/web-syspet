@@ -32,6 +32,8 @@
 
   padding: var(--padding-md) var(--padding-sm);
   transition: transform 300ms ease-in-out;
+  z-index: 11;
+  
 
   @media screen and (max-width: 1024px) {
     transform: translateX((-100%));
