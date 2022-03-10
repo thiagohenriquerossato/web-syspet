@@ -42,6 +42,7 @@ const messages = {
   date: 'Data',
   time: 'Hora',
   event: 'Evento',
+  noEventsInRange: 'Não há agendamentos para essas datas.',
   showMore: (total:number) => `+ (${total}) Eventos`,
 }
 
@@ -82,6 +83,7 @@ export function Schedule(){
   },[reloadPage])
 
   function handleSelectEvent(event: Event){
+    if(dayjs(event.end).isBefore(dayjs(new Date()))) return;
     setTrigger(true)
     setSelectedEvent(event)
     

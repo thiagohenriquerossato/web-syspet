@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import {confirm} from 'react-confirm-box'
+import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 import { Animal } from "../../types/animal";
 import { PopUp } from "../PopUp/PopUp";
@@ -24,6 +25,7 @@ type AppointmentProps ={
 
 export function AppointmentDetails (props: AppointmentProps){
 
+  const navigate = useNavigate()
 
   async function handleCancelAppointment() {
     const result = await confirm("Deseja realmente cancelar agendamento?",
@@ -45,6 +47,10 @@ export function AppointmentDetails (props: AppointmentProps){
     props.setReloadPage(true);
     
   }
+
+  function handleExecute(){
+    navigate(`/criar/vacina/${props.event?.pet.id}`)
+  }
   return (
     <PopUp trigger={props.trigger} setTrigger={props.setTrigger}>
       <div>
@@ -53,7 +59,7 @@ export function AppointmentDetails (props: AppointmentProps){
       </div>
       <div>
         <button onClick={handleCancelAppointment}>Cancelar</button>
-        <button>Executar</button>
+        <button onClick={handleExecute}>Executar</button>
       </div>
     </PopUp>
   )

@@ -4,6 +4,7 @@ import { Container } from "../../components/Container/Container";
 import { CreateAppointment } from "../../components/CreateAppointment/CreateAppointment";
 import { CreatePet } from "../../components/CreatePet/CreatePet";
 import { CreateTutor } from "../../components/CreateTutor/CreateTutor";
+import { CreateVaccine } from "../../components/CreateVaccine/CreateVaccine";
 import { EditPet } from "../../components/EditPet/EditPet";
 import { EditTutor } from "../../components/EditTutor/EditTutor";
 import { HeaderBar } from "../../components/HeaderBar/HeaderBar";
@@ -43,7 +44,7 @@ export function Dashboard(){
                 <Route path="/editar/tutor/:tutor_id" element={<EditTutor/>}/>
                 <Route path="/criar/pet/:tutor_id" element={<CreatePet/>}/> 
                 <Route path="/editar/pet/:pet_id" element={<EditPet/>}/>   
-                {/* <Route path="/criar/agendamento/:pet_id" element={<CreateAppointment/>}/> */}
+                <Route path="/criar/vacina/:pet_id" element={<CreateVaccine/>}/>
               </Routes>
             }
           />
